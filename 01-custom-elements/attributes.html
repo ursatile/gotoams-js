@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Custom Elements</title>
+  </head>
+  <body>
+    <h1>Hello</h1>
+    <p>This is a paragraph</p>
+    <hello-world id="my-hello-world" name="GOTO Amsterdam"></hello-world>
+    <input type="button" id="ams-button" value="GOTO Amsterdam" />
+    <input type="button" id="cph-button" value="GOTO Copenhagen" />
+  </body>
+  <script>
+    var myHelloWorld = document.getElementById('my-hello-world')
+    document
+      .getElementById('ams-button')
+      .addEventListener('click', function () {
+        myHelloWorld.setAttribute('name', 'Amsterdam')
+      })
+
+    document
+      .getElementById('cph-button')
+      .addEventListener('click', function () {
+        myHelloWorld.setAttribute('name', 'Copenhagen')
+      })
+
+    class HelloWorldElement extends HTMLElement {
+      connectedCallback() {
+        let name = this.getAttribute('name')
+        var p = document.createElement('p')
+        p.innerHTML = `Hello, ${name}`
+        this.appendChild(p)
+      }
+
+      static get observedAttributes() { return ["name"]; }
+      
+      attributeChangedCallback(attributeName, oldValue, newValue) {
+        let p = this.querySelector("p");
+        console.log(p);
+        p.innerHTML = `Hello, ${newValue}`;
+      }
+    }
+    customElements.define('hello-world', HelloWorldElement)
+  </script>
+</html>
