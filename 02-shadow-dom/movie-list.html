@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Movie List Example</title>
+    <style>
+      li {
+        color: #f0f;
+        font-family: 'Comic Sans MS';
+      }
+    </style>
+    <script defer src="movie-list.js"></script>
+  </head>
+  <body>
+    <h1>Here are some things that are pink:</h1>
+    <ul>
+      <li>Flamingo</li>
+      <li>Candy floss</li>
+      <li>Cadillac</li>
+    </ul>
+    <div style="color: blue;">
+      <h1>Here are some awesome movies:</h1>
+      <movie-list></movie-list>
+      <p>this paragraph is also blue.</p>
+      <input type="button" onclick="hack()" />
+    </div>
+  </body>
+  <script>
+    function hack() {
+        let movieList = document.querySelector("movie-list");
+        console.log(movieList);
+        movieList.shadowRoot.innerHTML = 'HAHA! Hacked your code.';
+    }
+  </script>
+</html>

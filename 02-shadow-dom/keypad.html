@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Shadow DOM Exercise</title>
+    <style>
+        button {
+            background-color: #f0f;
+            font-family: Comic Sans MS;
+            font-size: 180%;
+            border-radius: 20px;
+            outline: none;
+            border-style: 5px solid #f0f;
+        }
+    </style>
+    <script>
+        class NumericKeypadElement extends HTMLElement {            
+            constructor() {
+                super();                
+            }
+            
+            connectedCallback() { 
+                let style = document.createElement('style');
+                style.innerHTML = 'div.keypad div button { width: 2em; }';
+                this.appendChild(style);
+                let div = document.createElement('div');
+                div.className = "keypad";                              
+                div.innerHTML = `
+                <div><button>7</button><button>8</button><button>9</button></div>
+                <div><button>4</button><button>5</button><button>6</button></div>
+                <div><button>1</button><button>2</button><button>3</button></div>
+                <div><button>*</button><button>0</button><button>#</button></div>`;
+                this.appendChild(div);
+            }
+        }
+        customElements.define("numeric-keypad", NumericKeypadElement);
+    </script>
+</head>
+<body>
+    <p>This page has a keypad in it, drawn using a custom component:</p>
+    <numeric-keypad></numeric-keypad>
+    <hr />
+    <p>The keypad is supposed to look like this:</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAF0AAABgCAYAAAB/lX6wAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAB3RJTUUH5QoaEBQ1m3I/zQAAAAd0RVh0QXV0aG9yAKmuzEgAAAAMdEVYdERlc2NyaXB0aW9uABMJISMAAAAKdEVYdENvcHlyaWdodACsD8w6AAAADnRFWHRDcmVhdGlvbiB0aW1lADX3DwkAAAAJdEVYdFNvZnR3YXJlAF1w/zoAAAALdEVYdERpc2NsYWltZXIAt8C0jwAAAAh0RVh0V2FybmluZwDAG+aHAAAAB3RFWHRTb3VyY2UA9f+D6wAAAAh0RVh0Q29tbWVudAD2zJa/AAAABnRFWHRUaXRsZQCo7tInAAAXWklEQVR4nO2de3AU15XGf7d7XnprEBJCCAkkQELCCPSAgNf4EcDJ2sIYy0ns2Ow6ZdY42KmtJd6tJdSWt1amsoX5ZwlUEpJ1leyssQ0OBhI7sLEXjDEgwJbD+yEYAXqMEKO3NDPdffePHgYBEkioB+SYr0pVPd2377nz6fbte893zh0hpeQubi+UO92AbyLukn4HcJf0O4C7pN8B3CX9DuAu6XcAtj7O351HWgPR28m+SKe+vp73338fj8cTsRZlZmayYMECgIjaGqwdRUoM0St/fdpKTU3ts4zoY3Ek165dS25uLoWFhQNq4EBw8OBBjh07BhBRW4OxIzo6sP3fLvQpkzFGjey3rR//+MfQR0/vc0z3eDwRJRygsLAQj8cTcVu3akc0N+P6xS+w7f4U+8c7EXUN/bZ1I9x9kfYB5dIlXGvWoJw7h9LSjHriMKKzw5K6+xzTv8lQvF6cv/wlitcbPhd49BGM7Cxr6h/c7V42POfG7b72byEbai1p33WoXNnDzspKy+tX6upwrlmDUltNQ3U11dXVPP7RJdaPnh4uI/r5Uu3TxuCamELZGz58vit/25YBy16mLG1wNfcG78aFzD2yjuM+Hz7fNpavmMvCjd6b39hPqOfPm0NK0wWaa7yQkknaa6/x1s4FbM5fRSVg27ET+wdbEMqtU2ft8LJ/FXNXLGebr8TSai/DU70F8l4mBYASZi2D8moPhM4MBurZszh/9StEWxt0d3OJYbT904vETp4MTOXlZW66fj0J51dbIC4ehCAw71G4Bde4hS9SLxvWlFP6m2eJDOWQmVUKRzyYfbuSnStg+YODtybq63GuWWMSDqDAC0ez8E2eHC6TXp9O4e5NZvm2VsTFRtD1W7JnHen732TRpuW8/MTge11fSHmiAt8SDzluN273ajIP+1haPPh6lfpajOyx4c/G6BS+7djA6tDQ5fhdOXFHR9MRDAIQvOce/M/9PYSGGNHZiejshH6O9ZaRXvlJOSybFbFeDqGX6JrM0Jj+OvzMbcmYrk8pJFhUhJaXC4DSEOCnz8zG+Nf7WVFQwLlNp4hxm2W1KVPwv/BC+F6luRnnL3+Fs+JNlM6ufhFvEelePEesedT7Rmg4WVIWGsFTKFuynC3Pv4kVcxi9sBi9pBgtdwIAtgaDjU//gNfuu4+sEVEQgKNjpuJ//vnwPUpTE47Vq1GrT6OeOo3jrbcQmnZTW9aQXruTzZtKyYzAjOW2QVXRCkvQiovQc8YDoFxsDF0M8pczXg48viRcXPF6ca1Zg9oQWqV2d6IVFSFV9aamLCLdw5b585gVUdJDs5U1G0IvUvPFbemQpqroRdPQihM59FUj7aFO29J5lv/I/xHPht4fyoULOFevRvRYPPl/9CO0wqn9MmMJ6V5PlRXV3BQlrxxnHYtCL9IcFuVtw/eKxUOa3Y5e/BTj/2EsHx75kurqaprqU1n3QAyph46gnjuHc+1aFJ8vfEv388+jDcCnY8k8PeWJCnxPWFHTTS1R9oaPsjcGfmdCUKfFfvNHH0DaHehP/jvzxu7Ftq8S9fQZOFCJ1tmJ7cxp6O4GTBdi9+LF6JMmDagt3wjfi+2z3cy+UM9XSYn9vkc6nehTixGGAYZEPXMW29HDV66rqkn4xIkDb8+A7/iaQf3yC5xv/w/p7c0gBOqho+iT+keUjI5GKyxB6gbCMFA8NeZ5u53uF1/EmDDhltr0V026CAYRqoIxJhObz8eo9mYcu3YTEAI9P7d/ldhi0YuKkYaBXTdQmprwL16MkZ19y+3qk/TMzEwOHjwYceUoMzMzfGy1LWm3o4/N4lTWWOI8NbhbW+n+6iBOAEVBn3jjnmo7dBjOR2MUjMMoLkFz2DHGjsMYNarPe3p+p77Qp1z3ddZIHYYDXehIJIYwyB2ZymP5eURt207XiZN0GpJzsYkcHJZITWxUr3VMaG2ltKYGTdjZm/o3nIjXabY13VQrvUYjHZgw/XXFhNY2YrU4ooPdNDtseNx2tJhYtDFj6Zr9bVrr6oj2NTO6owWJQCqCc9Guq+rIbW7mkfPnAbDJIBMu7aMqcXy/xemb4a9KmHZs/QO2PXsR7a2AQCYkIkeM4MtpxVRVV+PoaKcoNpoJR0+geL3IqBiMCXkEHrovrArZ9u3DWVERrtNITsb/4osYKf1z5H2jhGnH73+P/aMPUZovgaaBFkRpakSpPs3kAwdprq3lWIOXzDkPo313LjI5GdHVgXLqGPZPdqGercG2e/fVhI8cif/ll/tNeM/vdCP8VQwvjvfew75jB2BGSRlZY5CxsSj1DciLTajV1UwK6HyaMgwj0Q3jJsDDBvY/foS4dAnb6WPmP+jcmXCd+ujR+F94AZnY/7l9f/G1J92xfj32XbvCn/VvTcf/7PcRbR3YPt2F/Q9/go52nA4XjijzpWm4h0FOLkiJ/Y8fInzNKG2tV+rIzMS/eDEyLi4ibbY2BKN2AwsjKEpDJat6COBrioq49NGO8FVt5ky6n3kWKR0YsSHCbCpCUXAE/OghEQJM4vUJOQQfnouMv0KulpWFf8kSZFzXVaK7lVqstXLdzxaxxboKr0ethyqWs83no2P92/zzjBmMiDX9KXr+JPxPPx0uqp67gO3T3aDpGNHR1MXEXSevGUnD0XMmEvzOw8jYWIzx4wm89BIyOprKlTks4ooIXvB8Dqv2W/M1rBte9r/JIkoptazCXlDrYcv8TFYFgxgxUejZY01nFGBEx6AeOYael4taXW2KzB0dCMBQFC7Y7AR7makZyclAHjLRjZY/CVQVUzApZd3hsrAIvrSHV3GwsKinV7JqDmx7bZ411fUBr6eK3AluUhwOU+kpKkQfY67+HJV7UQ8ewP7nj3GtXYvoMKOxpKoS/Lu/oz7K1We9RnIK2uSCEOHA/p2UUxAxUcYaf/rG1VRFMArgMuyfHOff/ljO3+ZOZOS48Yz+7zouFRdiZIxGAo59e3F8sCnsepVOJ90vvYSWkzNwY/MzYePCITqm127gp1vn8XoEowAwDFxrXiexIYnsMfn87+Il1O/9E6ucP2XybpVgcRF6+iikYYBhACbh/iVL0MePvzWbmxaxmtfNIKrD68DCMX3QpFf+bhEFYbE4AtCCOH/9a9SjZ4kdkcXUBFBrz+PYtIsnnvwnOlZXsb+oGK2kGGOUOR4IQM/JQxqDMdwjnCStjJeXQfkn1oTxDfJFair05SvclPc4uyXfjWe7NTEpQnSA5kcqiikoAKKjDeVCDfZLHeQ8Np1RiW7TCygNbNJAqa1HPXYYmZCArgj0rLE3sXIN0jIp5fpVZWnWjb2H/cUge7r5Vg/HMh5eRymlrLMoCAgA6UJ/8EFIVGmursZruJCKQLQ30rjrGD9P9DGiwYuR6EYrKkErKcJIHYEIBLDt24Oy/wuUM2cHZjNtFvPml4eDjajdwOoVpcybYc3zPCRXpJIrniJpc6G7h6GNLyCxK8Cp/Qd4p7uTOQluHCkZPCRq0T/YSmDBPGRSElphibnS3Lsf0eDFsX8PQUWQ2u2n3uXsZwtSKHvjODyXgzsU5rJ8u8+yoFhrSU8ro8JXNqgqRFsbIhiEmCSk05xXy7R0tMKpKEeOk/2tGSyePAkRE43tfz+GtlbUM6dw/H4rgbLHzAVPYQlS17HvO4DSeBFb5V5ibfYBtuTWRfCbYUhlYiheL67f/Bbnf1eg7j+JcrYmfE3mZyNnTIOODpRaL0biMLTvzAVFQbS1olSfxP77LSitbRjDkzGKpqOVFGIkDSM4cwanYqPv4De7GkOG9HAw/ulTKJ5qnB/8GvsnO7BXHUIIgSQWbfx4jAnZqA21yC43emYx/sfnY9hsKG0tqKeOY9+0GdHegZGSglZYQuDppwk+9tid/npXYUiQHh8M4KioQGlqAkBIAzo7UY/8Bft772L74+copxrRc/PQR6UhFQXH7q1IPQaZPxWt9NEQ8a2oJ47h+GALoqsbmToSPaefAvRthPrqq6/2dv7VkydPEgwGGTny5ml8t4qDBw+iaUGS410kt7QSi0AEAubF6Gj0YcOQKtiPfoni80JHJ8bcApTjp1Hq6hABH1rJVGRSEjI2BsXjgc4OlPY2jPR0ZHJyDzsaiYmJt+k7aZSUlAD8e29lhogwrfHn9W+RtfcLRnZ0Ea3rSOB0ghu/TcWpBchoa6fT5qA5wU4gqJDd3EKbw8WxxCT2Dk/EpWqM7W5jZnUDlcnJHBw+vBc7kU0S7mnrRsL0kBhewEabK5bdo1NpiHHRqaoIYEyLDwOF83EJ7ExLRUiNUY1tZLW0ogKJgW7SO1sZ3W2nQzo4mZDAxgljriJ8KGKICdOTUerP49i4GcVz3sxusDsITp+JPnkKxHRj2/Ahiq8ZpbnFbKhqQ//2E/hLZ4HoPf/ndmVm97Q1pIRpxdeFaDbNTr1OmLZhpKYTeLwUbdRIZFQUBAPYKvch6mKR0XkEn3mK4IP3Y2RkIIVAkQbK5x8iGvvOZr5dmdk9bd0It3V4sX31Fc7Xf45tx5+wf3UIRVdQrmuCDSNtNPoT8zDSUiE6CuHvxLl9LcqhJlAy0EumE1zwGEZeLrrdTmDB48gBKPZ3GrfNDWD74gucv/0tQgiUT/4Ae6IRk71MbLFzOtZAdApk9OXhwYaenolcUIp9wwfY6hug/RKO7WsJqD9BvycJPcOJsfgpOOvDGHvrcYV3Apb29MqVvTv7FW8D9q2bEYCUEmnoiLZW7J+9z3TvUR6pOY9adRilrr5HNrINI3Ms2uOl6Ckp4HIhLp3h5Ks/5HvTZzM+YzLuVaciR/j+VRHLALcuu26lm7krer8mhyeg5+SiC4EUCsaIEWh5uUiHnfhAFxkdjTg+fAfn+ndR9p5Gqb78j7OjZ2UTmP8IeoqNhjO1pI6fwAc/+ltOnvwdy1572FJFJ4zaDSycU8W6w6b39PhvYFEoY9oKWEC6GRYx98hyls/vvYSUNvT8POSoNISiIGPdaPc+gP+pMk4mxNFtU5HNPpSz1TjfXoPzg3ew//kTlEYVEVCRE3IIPvZDhj/0EEkJDrTHv4uMM3OQtlRHYM6dVkaFryLsVUyZMY9SqvBY1NstGdNnbffhK/ay4blyes0+Um0YGRnow5NQvF4UXwsaU9CnBti39U+cSkjkqREpiLM1iKAfpfoESs0Z9KMNGMPtaDMfQY4YS/CxR5BR8Rg3CUW2Gt7PN7Nl/jxeHzqu3RJKrhEsRCAATic91wAyLhbjvnsxqs9gu1iL7cs30ac8TaMriuZoF3LkCMTJ02ZZKSEYQD22C9UVhVp9Bq1oCtpDs5B2h1lh7QZWr4Dl2yMoh9duYGG+GcuzfHuFZZKk5VPGB09/juOtjeC/VqBUke5kjHvyMYRAPXMK+2cHAJhe58W+c3e4pJGZgVYw2czJ1AKItib0/NwrhFPJqvxFbFm2zTqFqjeklVERUsSq5riHjjDdExMDo3jyyEcIvwM6r89kM1KS0UePRKoq4mIDoqab755vY3pjY7iMVlBA1yv/TPC73yH4vScJFhbS/dISjPT0UIlKVrnnUr4sAumMfWFoCdNXIBoaGW7Em8cXjyMuVSMTx1xXTubnIQ+dgEOHse/6H/Kar0ROaUVF+J97DgAjPQMjPQNRMg3p6NHD3XOp+s1xfJEM+bgOZhp+6aNDQpjugWGJBNAxhEC0tyJieksrEcjYJPS0tOsiYvVp08KE98QVwr1seM7s4RWRJvzaQNj9b7Jok3XCtHWkS0mXGiCoqBAMou6pRPj91xezO9Dun44eHxf2Bh0fMYLuhQtvXH/tTjZvAlbMvXrrqucup61biLQyKrYXsCg/ZGNOOcu3VwwNYVpcqIOkNFABZxoT/3ENURXrkQE/Sksz0uXqfeefqDiMe2ciN29FFwLd6EcujwWi94BQvBSfb2lEqr5l0h3r16M0XkLGp2EMS8CYOBrR1IIRHY1ob0c0taLWdaOnXh/2IB0xyBEj0RMTUOvqSG5rQ/3yPPqU9F4s/fXhlkh3vPMO9l27TF+KcgwcTuRnKtJmMwkHlNoa8F5AiU7GiI8DHfOJCEEfnY4ybhwcPUZydwfC1w4GQ0ZWiSQGTLpob0S2taCPyUT4fNDahggGEN06AtNrLwEC3TjefQNS09FTsjGSMzCmJJs6Z1w6xEWhZWdx0eWgS7Ex7t6sbwThMMCMaaW5BSMxkeAPnkLXuhCe8yjtnYjzNSgXL0JLu7nM13WkrqE0+xAtzSjH/oJ0uuDjaKQzCj1zOriDVAc6ac7I5NC48bQcOhTRvXYjmZndl62+0G9heu6FWlTs7BueSJPTjhDmO1KREpfUkHaF+M4g+U2XuKepCVvIRdupqrhCaSc9O7KOoCYri8yfLQOG9q7St2Jr0BnT8z0estvaaHc4kUKwY8QwulSTQkMIOoUddPA7VS7ExjC+tYVYTacuOoYLcTF0RQmSWvwkdftx6jpRgQA18XFUTczl9rquhgZuKExPzMlhxp49qEePhi8Eyp4k+MD9fVRnIJovErV2HaK2DiNtFP6f/AQZ54QWMx1FaW2Axmb0qdO+Flt536qtWxKma8+cYeZnn11FeHDevBsQHqpOcaCPSjNjDLu6UA5fREobMj4BGZ+Anj4Ofeo0YOhv5T0YWzdC76R3dvL42bMoJ06ETwXmzycwd+6VG+vqUHrbbzYhGpmWZM5kfJdQL167XvyGTFFugOsZmDFjmL5yJaM7O8OngmVlBGfPDn+2HzhA1H+txrZ563Ub/UrpQCpRGC4nUiiI2sNm/MpdhHE1YzNnpuhRUb/l9OnwqcD3v0/ggQfCn2179uB4442QsLwL245PQ1cqWRXygxhZ2eCKQpEGosUHqnVBBz238rbKv90XvBsXhjXYypWR8Kd/b0aUFu1aIoUIb70WnPk3BO+7L1zE9tlnON96CzAXQHpcLNqkPLwbF+JeuRPw8PY/pPKvO1swAgEQAj1nPNLpwBKEd6324du+nPI51onFvcFTvYWCzBRM1651m31eIf3dz7t0u/hSKjK8u4FobcN20FQ97Z9+ivPtt8PFjYwMM4fe7Ta3CHwQfF98Sd5yD689k43MHoN/9mwCpY9a01Ku2c+3+FnWzS9nZ8R6eyU7VyxnVjGAB88m65J5r3runXEfb9baH1DEpLy/Z8en2A5VgaqgHjmMbc8VOU0fO9bcliM21jxx4T0+f/k05bPjOfXMv3Bo+39yz7fnmMOMZehdSKjyeKHYSv96SJm6/NHdI2/QDdt8SwedpHz1mP6u1G3ets3M+Bbn4mIAsFV9cRXhWna22cMvE65puN6vZ3aRQky3oGCag4Kjxywm/ArMxx0ghcy8SFgIZQxuXw7LtplZg+HjwRMOvc1e9u8PKt+6l6MJ8WjjryZOTxtl7hLhMvPsRSBgbvJ7/Hi4TGDubLQpBRY07c7C66kK541WflJu6Y7ZvU+a7XaOJQxDLylGH3flF0+M1JGI4ycB80eXXL/4BerJk+HrgQULCPaYy0cCVZ7L835zuLEeZvBUzvNb2PJ8Dm63GblWPseN223Ni7vPuVxQCPTCEjPXXkrU02ewH9xv7rzc1YX9/z42001CCDz5JMH7b7RaHSx6H06uDDdWoYSlvm3g3sks31JKqGRV+Nga3HB5KF0u9MJitB5bfNgr9+J87x3UnoT/4AcRJtxEyYM9NqkP/RzErEjEvdR6qJqfaTrjeh5bhJuuWmR0DHrRNKRhIKRE8dRctcL0//CHaDNmWNikG6B4KduWuZkbmlEs3+6LzHYntR625M2i4tpji9CvpaKMicEoKiFoSGyGgXrO3CjSv3Ah2rRpFjbn5ih5xYfvlQgbKV6Kr7iXY4vQ7/W5jItHLzbz7jEMtIe/M6CN2u/iCgbkFJHxCejFJRj3FAxog8i7uBoD9kTJhMS7P8s7SPQ5e7ksTEcSl0XcSNu6XXZ62roRhkjG9DdLmO6T9Ii16puFAUUDWLNR+F30iruC5R3AXdLvAP4fsdNfXmhMFVoAAAAASUVORK5CYII=" />
+    <p>The problems is, we asked our web designer to redesign some buttons, and ended up with all our buttons looking like this:</p>
+    <button>Add to Cart</button>
+    <button>Go to Checkout</button>
+    <button>Help</button>    
+    <h4>Exercise</h4>
+    <p>Use the Shadow DOM to fix the rendering on the keypad, 
+        without undoing any of our designer's 
+        brilliant work.
+    </p>
+</body>
+</html>
