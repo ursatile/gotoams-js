@@ -1,8 +1,8 @@
 export default class CountingEngine {    
     #count;
     #initialValue;
-    constructor(count) {        
-        this.#initialValue = count;
+    constructor(count) {
+        this.#initialValue = parseInt(count) || 0;
         this.reset();
     }
     increment() {
@@ -14,6 +14,7 @@ export default class CountingEngine {
     reset() {
         this.#count = this.#initialValue;
     }
-    
+
     get count() { return this.#count }
+    get initialValue() { return this.#initialValue }
 }

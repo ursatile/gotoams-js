@@ -31,6 +31,6 @@ export default class Renderer {
         this.root.appendChild(wrapper);
         this.update(engine);
     }
-
-    update = (engine) => this.span.innerHTML = engine.count;
+    
+    update = (engine) => this.span.innerText = engine.count;
 }
