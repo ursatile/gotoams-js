@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head><title>ES Modules</title>
+</head>
+<body>
+</body>
+<script type="module">
+    import { SayHello as Goedemorgen, SayGoodbye as Afscheid } from './greeting-nl.js';
+    import * as English from './greeting-en.js';
+    import SayHelloInUkrainian from './greeting-uk.js';
+    var hello = Goedemorgen('GOTO Amsterdam');
+    var goodbye = English.SayGoodbye('GOTO Amsterdam');    
+    console.log(hello);
+    console.log(goodbye);
+    console.log(SayHelloInUkrainian('GOTO Amsterdam'));
+</script>
+</html>
