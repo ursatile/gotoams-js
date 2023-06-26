@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Custom Elements</title>
+  </head>
+  <body>
+    <h1>Hello</h1>
+    <p>This is a paragraph</p>
+    <hello-world name="GOTO Amsterdam" count="5"></hello-world>
+    <hello-world name="GOTO Amsterdam" count="foo"></hello-world>
+    <hello-world name=""></hello-world>
+    <hello-world name></hello-world>
+    <hello-world></hello-world>
+  </body>
+  <script>
+    class HelloWorldElement extends HTMLElement {
+    //   constructor() {
+    //     // gets run every a component is created
+    //     super();
+    //   }
+      connectedCallback() {
+        let name = this.getAttribute("name");
+        let count = this.getAttribute("count");
+        count = parseInt(count);
+        if (isNaN(count)) count = 1;
+        for(let i = 0; i < count; i++) {
+            var p = document.createElement('p');
+            p.innerHTML = `Hello, ${name}`;
+            this.appendChild(p);
+        }
+        let hr = document.createElement('hr');
+        this.appendChild(hr);
+        console.log(count + count);
+      }
+    }
+    customElements.define('hello-world', HelloWorldElement)
+  </script>
+</html>
