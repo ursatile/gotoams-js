@@ -1,14 +1,19 @@
 export default class CountingEngine {    
-    constructor(count) {
-        console.warn('CountingEngine.constructor() is not implemented!');
+    #count;
+    #initialValue;
+    constructor(count) {        
+        this.#initialValue = count;
+        this.reset();
     }
     increment() {
-        throw('CountingEngine.increment() is not implemented!');
+        this.#count++;
     }
     decrement() {
-        throw('CountingEngine.decrement() is not implemented!');
+        this.#count--;
     }    
     reset() {
-        throw('CountingEngine.reset() is not implemented!');
+        this.#count = this.#initialValue;
     }
+    
+    get count() { return this.#count }
 }

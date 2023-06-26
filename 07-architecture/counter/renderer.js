@@ -1,20 +1,36 @@
+import * as html from './html.js';
+
 export default class Renderer {
     constructor(shadowRoot) {
         this.root = shadowRoot;
     }
-    render(counterEngine) {
-        //TODO: render the counter when the component is first added to the page
-        this.root.innerHTML = '//TODO: implement Renderer.render())';
-        
-        // These elements have to be exposed as properties so that the controller
-        // can attach event listeners to them.
-        this.incrementButton = document.createElement('button');
-        this.decrementButton = document.createElement('button');
-        this.resetButton = document.createElement('button');
+
+    drawIncrementButton = () => html.element('button', {}, '▲');    
+    
+    drawDecrementButton = () => html.element('button', {}, '▼');
+
+    drawWrapper() {
+        let wrapper = html.element('div', { 'class': "counter-wrapper" });
+        this.incrementButton = this.drawIncrementButton();
+        this.decrementButton = this.drawDecrementButton();
+        this.span = html.element('span', { "id": "counter" });
+        let counter = html.element('div', {"class": "counter"});
+        counter.appendChild(this.span);
+        wrapper.appendChild(this.decrementButton);
+        wrapper.appendChild(counter);
+        wrapper.appendChild(this.incrementButton);
+        return wrapper;
     }
 
-    update(counterEngine) {
-        //TODO: update the web page based on the state of the counterEngine
-        throw('Renderer.update() is not implemented!');
+    render(engine) {
+        const link = html.element('link', { rel : "stylesheet", href: "counter.css" });
+        this.root.appendChild(link);
+        let wrapper = this.drawWrapper();
+        this.resetButton = html.element('button', {'id': 'reset-button'}, 'Reset');
+        wrapper.appendChild(this.resetButton);
+        this.root.appendChild(wrapper);
+        this.update(engine);
     }
+
+    update = (engine) => this.span.innerHTML = engine.count;
 }
